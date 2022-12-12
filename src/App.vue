@@ -11,7 +11,9 @@ const stylecolor = 'color: blue';
 //Uso de expresiones de JS
 //Las expresiones de JavaScript se puede utilizar en las plantilñas de Vue dentro de {{}}
 const arrayColores = ['red', 'green', 'yellow'];
-const activo = null;
+const activo = true;
+
+const arrayFrutas = ["🍎", "🍌", "🍉", "🍓", "🍒"];
 </script>
 
 
@@ -34,16 +36,9 @@ const activo = null;
   <h2 :style="stylecolor">Soy azul</h2><!--Atajo-->
 
 
-  <!--La etiqueta template en vue sirve para, poder renderizar todo el html, que nosotros necesitamos, 
-  en este caso en nuestro componente App.vue que va a ser toda nuestra app-->
-
-  <!--En Vue Tenemos una técnica para trabajar que se llama single file componet(SFC), esta estructura
-  nos permite separar la lógica, la estructura(html) y los estilos en CSS. 
-  -->
-  <!--
-    En teoría es obligatorio ya que pues si en el html pues no se muestra nada
-  -->
+  
   <!-- V-if -->
+
   <!-- <p v-if="activo">Estoy activo - v-if</p> -->
   <p v-if="(activo === true)">Estoy activo - v-if</p>
   <!-- <p v-if="!activo">Estoy activo - v-if</p> -->
@@ -51,7 +46,34 @@ const activo = null;
   <p v-else>Estoy indeciso - v-else</p>
   <!-- <p v-else>Estoy inactivo - v-else</p> -->
   <!--v-else para que funcione tiene que estra seguido del v-if-->
+  
+  <!--V-show-->
+  <!--La directiva v-show se usa para mostrar o ocultar un elemento de la plantilla.
+  v-show solo cambia la propiedad display CSS del elemento. este elemento aparece en el dom aunque sea false,
+  ya que esta oculta, su display es none, en cambio en el if si es false, no existe el elemento -->
+    <h3 v-show="!activo"> Estoy activo gracias al v-show</h3>
+   
+  <!-- En términos generales, v-if tiene costos de alternancia más altos mientras que v-show tiene costos de renderización inicial más altos.
+   Así que prefiera v-show si necesita alternar algo con mucha frecuencia, y prefiera v-if si es poco probable que la condición cambie en el tiempo de ejecución.
+  En pocas palabras, use v-show si se va estar alternando el ocultar o mostrar algo, y v-if si la condición sea con poca probailidad de que cambie
+ -->
+
+ <!--V-for-->
+ <!--La directiva v-for se usa para iterar sobre una lista de elementos. Para darle a Vue una pista para que pueda rastrear la identidad de cada nodo y, por lo tanto, 
+ reutilizar y reordenar los elementos existentes, debe proporcionar un atributo key único para cada elemento.-->
+ {{arrayFrutas}}
 </template>
+
+
+<!-- La etiqueta template en vue sirve para, poder renderizar todo el html, que nosotros necesitamos, 
+en este caso en nuestro componente App.vue que va a ser toda nuestra app. En Vue Tenemos una técnica para trabajar que se llama single file componet(SFC), esta estructura
+nos permite separar la lógica, la estructura(html) y los estilos en CSS.
+
+**En teoría es obligatorio el template/html, ya que pues si en el html pues no se muestra nada**
+-->
+
+
+
 
 <style>
   h1 {
@@ -61,9 +83,9 @@ const activo = null;
 </style>
 
 <!-- Interpolación de texto (bigote o llaves dobles {{}}) es una forma de insertar valores en una plantilla-->
-<!--
+
+
+<!-- *******
 Directivas - Las directivas son atributos especiales con el prefijo v- .
 El trabajo de una directiva es aplicar actualizaciones de forma reactiva al DOM
-
-v-if
--->
+******* -->
