@@ -1,0 +1,86 @@
+<script setup>
+import {ref} from 'vue'
+
+const arrayColores = ['red', 'green', 'yellow'];
+const name = 'vue dinamico :O!!!s';
+
+
+/*se puede utilizar const, las const tienen mas performance que let, el maestro utiliza mas const porque tiene un grado
+mas alto de optimización */
+const counter = ref(0);
+/*ref() puede recibir cualquier tipo de valor */
+
+/*Lo que habiamos hecho, era una variable que estaba en nuestro script, pero no hay nada que le indique que cuando esta 
+variable  cambie nosotros tenemos que renderizar, no todo el template, sino solo el h2 y que me vaya mostrando los valores
+actuales que va a tener el counter y para eso necesitamos decirle a vue, que esta esta variable es una variable reactiva*/
+const increment = () => {
+  console.log('aumentar contador');
+  counter.value++;
+  console.log(counter);
+}
+
+/*
+  Por que en el h2 no aumenta, si esta aumentando el contador, lo que pasa es que no tenemos reactividad en nuestro sitio web,
+  no hay nada que le diga a ese contador tiene que generar otro renderizado, en este caso el h2.
+ Cuando Vue lee este nuestro sitio web, lee nuestro template, lo muestra en el navegador, pero no hay nada que le diga que, 
+ este contador contador esta cambiando, por lo tanto este pedazo de doom(el h2), tiene que cambiar también.
+ 
+ Para eso es la reactividad, para decirle que ese counter genere en un cambio en nuestro doom y vue lo hace de una manera espectacular.
+
+ref()
+
+ref es una forma de trabajar con la reactividad de Vue 3.
+ref: Es una referencia reactiva, en nuestro ejemplo necesitamos un entero que sea "rastreable", por ende utilizaremos ref,
+ una forma de trabajar con la reactividad de Vue 3.
+ref toma el argumento y lo devuelve envuelto dentro de un objeto con una value propiedad, que luego puede usarse para acceder
+ o mutar el valor de la variable reactiva.
+DOM: Cuando muta el estado reactivo, el DOM se actualiza automaticamente.
+En el template no es necesario acceder al .value, ya que el valor de la variable reactiva se puede acceder directamente
+*/
+const decrease = () => {
+  console.log('disminuyendo');
+  counter.value--;
+}
+const reset = () => {
+  counter.value = 0;
+}
+</script>
+
+
+<template> 
+<h1 :style="`color: ${arrayColores[0]}`">Hola, {{ name.toUpperCase() }}</h1>
+
+<!--Variables reactivas-->
+<!-- <h2 v-if="counter > 0" style="color: green;"> {{counter}} </h2>
+<h2 v-if="counter < 0" style="color: red;"> {{counter}} </h2>
+<h2 v-if="counter == 0" style="color: purple;"> {{counter}} </h2> -->
+<h2 :class="counter >= 0 ? 'positive' : 'negative'"> {{counter}} </h2>
+<!--El operador ternario no esta muy bien optimizado-->
+
+<button @click="increment">Aumentar</button>
+<button @click="decrease">Disminuir</button>
+<button @click="reset">Resetear</button>
+
+
+</template>
+<!-- La etiqueta template en vue sirve para, poder renderizar todo el html, que nosotros necesitamos, 
+en este caso en nuestro componente App.vue que va a ser toda nuestra app. 
+
+En Vue Tenemos una técnica para trabajar que se llama single file componet(SFC), esta estructura
+nos permite separar la lógica, la estructura(html) y los estilos en CSS.
+-->
+
+
+
+<style>
+  h1 {
+    color: red;
+  }
+  .negative {
+    color: red;
+}
+
+.positive {
+    color: green;
+}
+</style>

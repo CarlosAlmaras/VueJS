@@ -1,0 +1,90 @@
+<script setup>
+const arrayColores = ['red', 'green', 'yellow'];
+const name = 'Vue dinamico :O!!!s';
+
+const arrayFrutas = ["🍎", "🍌", "🍉", "🍓", "🍒"];
+
+const arrayFrutas2 = [
+        {
+            name: "Manzana",
+            price: "$1.00",
+            description: "Una manzana",
+        },
+        {
+            name: "Pera",
+            price: "$2.00",
+            description: "Una pera",
+        },
+        {
+            name: "Naranja",
+            price: "$3.00",
+            description: "Una naranja",
+        },
+];
+const objeto =  {
+            name: "Manzana",
+            price: "$1.00",
+            description: "Una manzana",
+        } 
+</script>
+
+
+<template> 
+<h1 :style="`color: ${arrayColores[0]}`">Hola, {{ name }}</h1>
+ <!--V-for-->
+ <!--La directiva v-for se usa para iterar sobre una lista de elementos. Para darle a Vue una pista para que pueda rastrear la identidad de cada nodo y, por lo tanto, 
+ reutilizar y reordenar los elementos existentes, debe proporcionar un atributo key único para cada elemento.-->
+ {{arrayFrutas}}<!--Sabemos que si utilizamos las llaves dobles, podemos pintar el array Frutas-->
+
+<!--Sabemos que si utilizamos las llaves dobles, podemos pintar el array Frutas
+
+Que pasa si yo quiero pintarlo en una lista ordenada o no ordenada. No podemos usar esto, ya que no es dinamico, que psaría si tendriamos
+1 millon de frutas, o si eliminamos o agregamos frutas-->
+<ol>
+  <li>{{arrayFrutas[0]}}</li>
+  <li>{{arrayFrutas[1]}}</li>
+  <li>{{arrayFrutas[2]}}</li>
+  <li>{{arrayFrutas[3]}}</li>
+</ol>
+
+<!--Para eso existe v-for, para que haga recorra el array-->
+<ul>
+  <p>Usando la directiva v-for</p>
+  <!--Como segundo parametro podemos pasar el index del array-->
+  <li v-for="(fruta, index) in arrayFrutas" :key="index">{{ index }} - {{ fruta }}</li>
+  <!--No ES MUY RECOMENDABLE PSAR EL INDEX COMO LA KEY, COMO EL IDENTIFICADOR UNICO, 
+    EN ESETE COMO UTILIZAMOS UN ARRAY SIMPLE Y POR TEMAS EDUCATIVOS LO UTILIZAMOS ASI, EN EJEMPLOS MAS REALES UTILIZAR OTROS.
+  Esto es mas que nada para ayudar a vue a que identificque los nodos y que es lo que nosotros estamos recorriendo-->
+</ul>
+<!--En vue el in funciona tanto para objetos y para array(nos ahorramos el of que en vanilla js es para array, y el in solo para objetos)
+    pero con vue el in funciona para ambos(el for tambien funciona para ambos)-->
+<!--EL v-for lo que va a hacer es iterar o repetir el elemento que lo envuelva, en este caso un li, por cada elemento del array-->
+
+<ul>
+  <h2>Recorriendo un array de objetos</h2>
+  <li v-for="fruta of arrayFrutas2" :key="fruta.name">
+    {{ fruta.name }} -
+    {{ fruta.price }} -
+    {{ fruta.description }}
+  </li>
+</ul>
+
+<ul>
+  <h2>recorriendo objetos con v-for</h2>
+  {{ objeto }}
+  <!--propiedad -  nombre de la propiedad-->
+  <li v-for="(value, propiedad, index) in objeto" :key="value">{{ index }} - {{ propiedad }} - {{ value }}</li>
+  <!--El v-for recorre cada propiedad (valor)-->
+</ul>
+
+<!--v-if v-for juntos-->
+</template>
+
+
+
+
+<style>
+  h1 {
+    color: red;
+  }
+</style>

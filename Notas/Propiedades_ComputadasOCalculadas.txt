@@ -1,0 +1,133 @@
+<script setup>
+import {ref, computed} from 'vue'
+
+const arrayColores = ['red', 'green', 'yellow'];
+const name = 'vue dinamico :O!!!s';
+
+
+/*se puede utilizar const, las const tienen mas performance que let, el maestro utiliza mas const porque tiene un grado
+mas alto de optimización */
+const counter = ref(0);
+/*ref() puede recibir cualquier tipo de valor */
+
+/*Lo que habiamos hecho, era una variable que estaba en nuestro script, pero no hay nada que le indique que cuando esta 
+variable  cambie nosotros tenemos que renderizar, no todo el template, sino solo el h2 y que me vaya mostrando los valores
+actuales que va a tener el counter y para eso necesitamos decirle a vue, que esta esta variable es una variable reactiva*/
+const increment = () => {
+  console.log('aumentar contador');
+  counter.value++;
+  console.log(counter);
+}
+
+const decrease = () => {
+  console.log('disminuyendo');
+  counter.value--;
+}
+const reset = () => {
+  counter.value = 0;
+}
+
+/*Computed*/
+/*Muy similar a un método, hacemos un  método*/
+/*
+Computed recibe en su interior una función de flecha, y siempre tiene que retornar algo.
+Es una propiedad computada, es algo que va estar realizando un óomputo, pero siempre tiene 
+que existir un return. No podemos hacer un computed sin ningun return explicito
+
+*/
+const classCounter = computed(() => {
+  if(counter.value === 0){
+    return 'zero';
+  }
+  // if(counter.value > 0){
+  //   return 'positive';
+  // }
+  // if(counter.value < 0) {
+  //   return 'negative';
+  // }
+  return counter.value > 0 ? "positive" : "negative";
+});
+
+/*
+TIP
+
+En lugar de una propiedad calculada, podemos definir la misma función como un método. Para el resultado final,
+ los dos enfoques son exactamente iguales. Sin embargo, la diferencia es que las propiedades calculadas se almacenan en caché 
+ en función de sus dependencias reactivas.
+Una propiedad calculada solo se volverá a evaluar cuando algunas de sus dependencias reactivas hayan cambiado.
+
+*****OJO****
+Cuando nosotros trabajemos con datos que son reactivos, se recomienda usar computed
+*/
+// const classCounter = () => {
+//   if(counter.value === 0){
+//     return 'zero';
+//   }
+//   // if(counter.value > 0){
+//   //   return 'positive';
+//   // }
+//   // if(counter.value < 0) {
+//   //   return 'negative';
+//   // }
+//   return counter.value > 0 ? "positive" : "negative";
+// };
+
+// Es necesario invocar al método
+
+// <h2 :class="classCounter()">
+//     {{ counter }}
+// </h2>
+</script>
+
+
+<template> 
+<h1 :style="`color: ${arrayColores[0]}`">Hola, {{ name.toUpperCase() }}</h1>
+
+<!--Variables reactivas-->
+
+
+<h2 :class="classCounter"> {{counter}} </h2>
+<!-- <h2 :class="counter >= 0 ? 'positive' : 'negative'"> {{counter}} </h2> -->
+<!--
+  El operador ternario no esta muy bien optimizado, ya que , que pasaria si yo quisiera pintar de otro color 
+cuando el counter sea igual a 0, que pasa si yo quisiera que cuando sea 0 me agregue otra clase, bueno esta
+lógica del operador ternario, yano nos serviría mucho.
+
+Computed
+Para eso existe las propiedades computadas en vue js.
+
+Las propiedades computadas nos sirven para generar calculos en nuestros componentes, por ejemplo no se recomienda colocar demasiada
+ lógica en nuestras plantillas HTML, ya que dificulta la interpretación de nuestros componentes.
+Por eso, para la lógica compleja que incluye datos reactivos, se recomienda utilizar una propiedad calculada.
+-->
+
+<button @click="increment">Aumentar</button>
+<button @click="decrease">Disminuir</button>
+<button @click="reset">Resetear</button>
+
+
+</template>
+<!-- La etiqueta template en vue sirve para, poder renderizar todo el html, que nosotros necesitamos, 
+en este caso en nuestro componente App.vue que va a ser toda nuestra app. 
+
+En Vue Tenemos una técnica para trabajar que se llama single file componet(SFC), esta estructura
+nos permite separar la lógica, la estructura(html) y los estilos en CSS.
+-->
+
+
+
+<style>
+h1 {
+  color: red;
+}
+.negative {
+  color: red;
+}
+
+.positive {
+  color: green;
+}
+.zero {
+  color: peru;
+}
+</style>

@@ -1,0 +1,44 @@
+<script setup>
+const arrayColores = ['red', 'green', 'yellow'];
+const name = 'Vue dinamico :O!!!s';
+
+//metodo - methods  si hacemos una función es un método
+const handleClick = (message) => {
+  console.log(message);
+}
+</script>
+
+
+<template> 
+<h1 :style="`color: ${arrayColores[0]}`">Hola, {{ name }}</h1>
+<!--V-on Eventos-->
+<!--Podemos usar la directiva v-on, que normalmente acortamos al símbolo @, 
+  para escuchar eventos DOM y ejecutar código JavaScript cuando se activan. El uso sería v-on:click="handler" 
+  o con el atajo, @click="handler".-->
+  <!--Cuando no tenemos prámetros, podemos omitir los paréntesis o dejarlos-->
+<!-- <button v-on:click="handleClick('texto 1')">Activame 1</button>
+<button @click="handleClick('Texto 2')">Activame 2</button> -->
+
+
+<!--Modificadores de eventos-->
+<!--Modificador, ademas de detectar el evento click, también esta detectando que botón se esta presionando-->
+<!--Modificador, tambien podemos ir concatenando modificaores, el .prevent, previene el evento por default del evento(click derecho)-->
+<button v-on:click.right.prevent="handleClick('texto Right')">Activame right</button>
+<button @click.middle="handleClick('Texto Middle')">Activame middle</button>
+<button @click.left="handleClick('Texto Left')">Activame left</button>
+
+</template>
+<!-- La etiqueta template en vue sirve para, poder renderizar todo el html, que nosotros necesitamos, 
+en este caso en nuestro componente App.vue que va a ser toda nuestra app. 
+
+En Vue Tenemos una técnica para trabajar que se llama single file componet(SFC), esta estructura
+nos permite separar la lógica, la estructura(html) y los estilos en CSS.
+-->
+
+
+
+<style>
+  h1 {
+    color: red;
+  }
+</style>
